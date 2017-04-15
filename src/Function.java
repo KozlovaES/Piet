@@ -1,6 +1,8 @@
 /**
  * Created by Ekaterina on 07.04.2017.
  */
+
+// Абстрактный класс, от которого наследуются классы функций.
 public class Function {
     protected String name;
     public abstract Agent work(Agent agent);
