@@ -1,10 +1,11 @@
 /**
  * Created by Ekaterina on 07.04.2017.
+ * @version 1.0.0
+ * Абстрактный класс, от которого наследуются классы функций.
  */
-
-// Абстрактный класс, от которого наследуются классы функций.
 public class Function {
     protected String name;
+    /** @param agent объект агента, над которым будет проводиться операция в функции */
     public abstract Agent work(Agent agent);
 }
 
@@ -102,7 +103,7 @@ public class Not extends Function{
 
 public class Greater extends Function{
     public Greater{ name = new String("greater");}
-    public Agent work(Agent agent{
+    public Agent work(Agent agent){
         int a, b;
         a = agent.stack.pop();
         b = agent.stack.pop();
@@ -114,6 +115,19 @@ public class Greater extends Function{
     }
 }
 
+// pointer
+// switch
+
+public class Duplicate extends Function{
+ public Duplicate{ name = new String("duplicate");}
+ public Agent work(Agent agent){
+     int a;
+     a = agent.stack.pop();
+     agent.stack.push(a);
+     agent.stack.push(a);
+     return agent;
+ }
+}
 /*"pointer", "switch", "duplicate", "roll", "in(number)",
 in(char)	out(number),out(char),
 craete_def, craate_class, create_object,
