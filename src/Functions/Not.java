@@ -1,0 +1,15 @@
+/**
+ * Created by Ekaterina on 30.04.2017.
+ */
+public class Not extends Function{
+    public Not(){ name = new String("not");}
+    public Agent work(Agent agent){
+        int a;
+        a = agent.stack.pop();
+        if (a==0)
+            agent.stack.push(1);
+        else
+            agent.stack.push(0);
+        return agent;
+    }
+}
