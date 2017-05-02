@@ -1,7 +1,10 @@
-package PACKAGE_NAME;
-
 /**
  * Created by Ekaterina on 02.05.2017.
  */
-public class OutChar {
+public class OutChar extends Function{
+    public OutChar(){name = new String("out(char)");}
+    public Agent work(Agent agent){
+        System.out.println(agent.stack.pop().toString());
+        return agent;
+    }
 }

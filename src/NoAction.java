@@ -1,5 +1,3 @@
-package Functions;
-
 /**
  * Created by Ekaterina on 02.05.2017.
  */
