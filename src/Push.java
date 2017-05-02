@@ -1,7 +1,9 @@
+package Function;
+
 /**
  * Created by Ekaterina on 30.04.2017.
  */
-public class Push extends Function{
+public class Push extends Function {
     public Push(){
         name = new String("push");
     }

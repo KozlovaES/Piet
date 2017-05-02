@@ -1,14 +1,16 @@
+package Function;
+
 /**
  * Created by Ekaterina on 30.04.2017.
  */
-public class Not extends Function{
+public class Not extends Function {
     public Not(){ name = new String("not");}
     public Agent work(Agent agent){
         int a;
-        a = agent.stack.pop();
-        if (a==0)
+        a = Integer.parseInt(agent.stack.pop().toString());
+        if (a==0) {
             agent.stack.push(1);
-        else
+        } else
             agent.stack.push(0);
         return agent;
     }
