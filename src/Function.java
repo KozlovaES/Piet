@@ -1,4 +1,4 @@
-package Function;
+package Functions;
 
 /**
  * Created by Ekaterina on 07.04.2017.
