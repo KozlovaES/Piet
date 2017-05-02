@@ -33,8 +33,10 @@ public class Piet {
             Color c1, c2;
             c1 = new Color(255,255,192);
             c2 = new Color( 255,192,0);
-            System.out.println("Color value = " + c1);
-            System.out.println("Color value = " + c2);
+            System.out.println("Color value = " + agent.get_cur_color());
+            agent.move_one_block();
+            System.out.println("Color value = " + agent.get_cur_color());
+            System.out.println("Blocks value = " + agent.count_prev_value());
             System.out.println("Function name = " + trans.get_func(c1, c2).getName());
         } catch (IOException e) {
             e.printStackTrace();

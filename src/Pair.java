@@ -24,4 +24,11 @@ public class Pair<K, V> {
         return element1;
     }
 
+    public boolean equals(Pair p){
+        if (p.element0==element0&&p.element1==element1)
+            return true;
+        else
+            return false;
+    }
+
 }
