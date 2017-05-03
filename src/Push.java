@@ -3,6 +3,7 @@
  */
 public class Push extends Function {
     public Push(){ name = new String("push");}
+    @Override
     public Agent work(Agent agent){
         agent.stack.push(agent.count_prev_value());
         return agent;

@@ -5,6 +5,7 @@ public class Substract extends Function {
     public Substract(){
         name = new String("substract");
     }
+    @Override
     public Agent work(Agent agent){
         int a, b;
         a = Integer.parseInt(agent.stack.pop().toString());

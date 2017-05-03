@@ -3,6 +3,7 @@
  */
 public class Pointer extends Function {
     public Pointer(){name = new String("pointer");}
+    @Override
     public Agent work(Agent agent){
         int a;
         a = Integer.parseInt(agent.stack.pop().toString());

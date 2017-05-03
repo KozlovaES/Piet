@@ -23,14 +23,14 @@ public class Pair<K, V> {
     public V getElement1() {
         return element1;
     }
-
+    @Override
     public int hashCode(){
         StringBuffer buffer = new StringBuffer();
         buffer.append(this.element0);
         buffer.append(this.element1);
         return buffer.toString().hashCode();
     }
-
+    @Override
     public boolean equals(Object object){
         if (object == null) return false;
         if (object == this) return true;

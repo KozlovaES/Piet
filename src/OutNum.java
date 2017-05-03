@@ -3,6 +3,7 @@
  */
 public class OutNum extends Function{
     public OutNum(){name = new String("out(number)");}
+    @Override
     public Agent work(Agent agent){
         System.out.println(Integer.parseInt(agent.stack.pop().toString()));
         return agent;

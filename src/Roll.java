@@ -6,6 +6,7 @@ import java.util.Vector;
  */
 public class Roll extends Function {
     public Roll(){name = new String("roll");}
+    @Override
     public Agent work(Agent agent){
         int n,m;
         n = Integer.parseInt(agent.stack.pop().toString());

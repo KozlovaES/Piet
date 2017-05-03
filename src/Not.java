@@ -3,6 +3,7 @@
  */
 public class Not extends Function {
     public Not(){ name = new String("not");}
+    @Override
     public Agent work(Agent agent){
         int a;
         a = Integer.parseInt(agent.stack.pop().toString());

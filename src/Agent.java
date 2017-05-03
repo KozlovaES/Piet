@@ -18,6 +18,7 @@ public class Agent {
         this.bi = bi;
         stack = new Stack();
         symboltable = new HashSet<Symbol>();
+        prev_col = Color.black;
         x_cur = 0;
         y_cur = 0;
         x_prev = 0;
@@ -37,14 +38,6 @@ public class Agent {
         prev_col = get_cur_color();
         x_prev = x_cur;
         y_prev = y_cur;
-        if (dp==0 && x_cur<(bi.getWidth()-1) && new Color(bi.getRGB(x_cur+1,y_cur))!= Color.black)
-            ++x_new;
-        if (dp==1 && y_cur<(bi.getHeight()-1) && new Color(bi.getRGB(x_cur,y_cur+1))!= Color.black)
-            ++y_new;
-        if (dp==2 && x_cur>0 && new Color(bi.getRGB(x_cur-1,y_cur))!= Color.black)
-            --x_new;
-        if (dp==3 && y_cur>0 && new Color(bi.getRGB(x_cur,y_cur-1))!= Color.black)
-            --y_new;
         blocks.add(new Pair(x_prev, y_prev));
         while (flag) {
             flag = false;
@@ -103,35 +96,13 @@ public class Agent {
                     y_new = y;
                 }
                 else {
-                if (cc==0 && y_new<y)
+                if (cc==0 && y_new>y)
                     y_new = y;
-                if (cc==1 && y_new>y)
+                if (cc==1 && y_new<y)
                     y_new = y;
                 }
             if (dp==1 && y>=y_new)
                 if (y>y_new) {
-                    x_new = x;
-                    y_new = y;
-                }
-                else {
-                    if (cc==0 && x_new<x)
-                        x_new = x;
-                    if (cc==1 && x_new>x)
-                        x_new = x;
-                }
-            if (dp==2 && x<=x_new)
-                if (x<x_new) {
-                    x_new = x;
-                    y_new = y;
-                }
-                else {
-                    if (cc==0 && y_new>y)
-                        y_new = y;
-                    if (cc==1 && y_new<y)
-                        y_new = y;
-                }
-            if (dp==3 && y<=y_new)
-                if (y<y_new) {
                     x_new = x;
                     y_new = y;
                 }
@@ -141,30 +112,76 @@ public class Agent {
                     if (cc==1 && x_new<x)
                         x_new = x;
                 }
+            if (dp==2 && x<=x_new)
+                if (x<x_new) {
+                    x_new = x;
+                    y_new = y;
+                }
+                else {
+                    if (cc==0 && y_new<y)
+                        y_new = y;
+                    if (cc==1 && y_new>y)
+                        y_new = y;
+                }
+            if (dp==3 && y<=y_new)
+                if (y<y_new) {
+                    x_new = x;
+                    y_new = y;
+                }
+                else {
+                    if (cc==0 && x_new<x)
+                        x_new = x;
+                    if (cc==1 && x_new>x)
+                        x_new = x;
+                }
+//            System.out.println(x+"-"+y+"   "+x_new+"-"+y_new);
         }
-        x_cur = x_new;
-        y_cur = y_new;
+        if (dp==0)
+            ++x_new;
+        if (dp==1)
+            ++y_new;
+        if (dp==2)
+            --x_new;
+        if (dp==3)
+            --y_new;
+        if (x_new<bi.getWidth()&&y_new<bi.getHeight()&&x_new>=0&&y_new>=0&&
+                bi.getRGB(x_new,y_new)!= Color.black.getRGB()) {
+            x_cur = x_new;
+            y_cur = y_new;
+        }
+        else
+            this.change_dp(1);
+//        System.out.println(x_new+"---"+y_new);
     };
     public void change_dp(int dir){
-        switch (dir){
-            case 1:
-                dp = (dp+1)%4;
-            case 0:
-                dp = (dp-1)%4;
-        }
+        if (dir>0)
+            dp = (dp+dir)%4;
+        else
+            dp = ((dp-dir)%4+4)%4;
     }
     public void change_cc(){cc = (cc+1)%2;}
     public void move(){
 
     };
-    public Symbol get_function(){
-        return new Symbol(Color.red, "name");
-    };
 
     public Color get_cur_color(){
-        return new Color(bi.getRGB(x_cur,y_cur));
+//        Заплатка!
+//        return new Color(bi.getRGB(x_cur,y_cur));
+        Color col = new Color(bi.getRGB(x_cur,y_cur));
+        if (col.getBlue()==204)
+            col = new Color(col.getRed(),col .getGreen(),192);
+        if (col.getGreen()==213)
+            col = new Color(col.getRed(), 192, col.getBlue());
+        if (col.getRed()==204)
+            col = new Color(192, col.getGreen(), col.getBlue());
+        return col;
     };
-
+    public int getX_cur(){return x_cur;}
+    public int getY_cur(){return y_cur;}
+    public int getX_prev(){return x_prev;}
+    public int getY_prev(){return y_prev;}
+    public int getCc(){return cc;}
+    public int getDp(){return  dp;}
     public Color get_prev_color(){
         return prev_col;
     };

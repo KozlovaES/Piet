@@ -6,10 +6,13 @@ import java.util.HashMap;
  */
 public class Transition {
     HashMap<Color, Pair<Integer, Integer>> dict;
-    Function[] functions = {new NoAction(), new Push(), new Pop(), new Add(),
-            new Substract(), new Multiply(), new Divide(), new Mod(), new Not(),
-            new Greater(), new Pointer(), new Switch(), new Duplicate(), new Roll(),
-            new InNum(), new InChar(), new OutNum(), new OutChar()};
+    Function[] functions = {new NoAction(), new Push(), new Pop(),
+                            new Add(), new Substract(), new Multiply(),
+                            new Divide(), new Mod(), new Not(),
+                            new Greater(), new Pointer(), new Switch(),
+                            new Duplicate(), new Roll(), new InNum(),
+                            new InChar(), new OutNum(), new OutChar(),
+                            new Def(), new Class()};
     public Transition() {
         dict = new HashMap<Color, Pair<Integer, Integer>>();
         dict.put(new Color(255, 192, 192), new Pair(0, 0));
@@ -33,9 +36,13 @@ public class Transition {
         dict.put(new Color(255, 192, 0), new Pair(6, 0));
         dict.put(new Color(255, 153, 0), new Pair(6, 1));
         dict.put(new Color(153, 112, 0), new Pair(6, 2));
+        dict.put(new Color(255,255,255), new Pair(0,0));
+        dict.put(new Color(0,0,0), new Pair(0,0));
+
     }
     public Function get_func(Color c1, Color c2){
-        if (dict.containsKey(c1)&&dict.containsKey(c2)) {
+        if (dict.containsKey(c1) && dict.containsKey(c2) && c1!=Color.black &&
+                c2!=Color.black && c1!=Color.white && c2!=Color.white) {
             Pair d1, d2;
             d1 = dict.get(c1);
             d2 = dict.get(c2);
@@ -49,6 +56,12 @@ public class Transition {
         }
         else
             return functions[0];
+    }
+    public boolean isBaseColor(Color c){
+        if (dict.containsKey(c))
+            return true;
+        else
+            return false;
     }
 
 }

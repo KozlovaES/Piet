@@ -3,6 +3,7 @@
  */
 public class Switch extends Function{
     public Switch(){name = new String("switch");}
+    @Override
     public Agent work(Agent agent){
         int a;
         a = Math.abs(Integer.parseInt(agent.stack.pop().toString()));

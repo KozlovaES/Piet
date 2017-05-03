@@ -3,6 +3,7 @@
  */
 public class Greater extends Function {
     public Greater(){ name = new String("greater");}
+    @Override
     public Agent work(Agent agent){
         int a, b;
         a = Integer.parseInt(agent.stack.pop().toString());

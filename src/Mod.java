@@ -3,6 +3,7 @@
  */
 public class Mod extends Function {
     public Mod(){ name = new String("mod");}
+    @Override
     public Agent work(Agent agent){
         int a, b;
         a = Integer.parseInt(agent.stack.pop().toString());

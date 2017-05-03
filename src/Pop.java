@@ -5,6 +5,7 @@ public class Pop extends Function {
     public Pop(){
         name = new String("pop");
     }
+    @Override
     public Agent work(Agent agent){
         agent.stack.pop();
         return agent;

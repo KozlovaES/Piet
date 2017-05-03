@@ -5,6 +5,7 @@ import java.util.Scanner;
  */
 public class InChar extends Function {
     public InChar(){name = new String("in(char)");}
+    @Override
     public Agent work(Agent agent){
         Scanner s = new Scanner(System.in);
         // Должно юыть считывание ввода пользователя. Сейчас с консоли.

@@ -5,7 +5,7 @@ public class Divide extends Function {
     public Divide() {
         name = new String("divide");
     }
-
+    @Override
     public Agent work(Agent agent) {
         int a, b;
         a = Integer.parseInt(agent.stack.pop().toString());

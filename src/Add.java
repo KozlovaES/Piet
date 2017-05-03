@@ -5,6 +5,7 @@ public class Add extends Function {
     public Add(){
         name = new String("add");
     }
+    @Override
     public Agent work(Agent agent){
         int a, b;
         a = Integer.parseInt(agent.stack.pop().toString());

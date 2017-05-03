@@ -3,6 +3,7 @@
  */
 public class NoAction extends Function{
     public NoAction(){name = new String("No Action");}
+    @Override
     public Agent work(Agent agent){
         return agent;
     }

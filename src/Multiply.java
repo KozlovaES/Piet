@@ -3,6 +3,7 @@
  */
 public class Multiply extends Function {
     public Multiply(){ name = new String("multiply");}
+    @Override
     public Agent work(Agent agent){
         int a, b;
         a = Integer.parseInt(agent.stack.pop().toString());
