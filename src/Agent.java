@@ -28,15 +28,122 @@ public class Agent {
 
 //    Field field;
     public void move_one_block(){
+        int x,y, x_new=x_cur, y_new=y_cur;
+        boolean flag = true;
+        Color col = new Color(bi.getRGB(x_new,y_new)), test;
+        Pair[] temp;
+        HashSet<Pair> blocks = new HashSet<Pair>();
+
         prev_col = get_cur_color();
+        x_prev = x_cur;
+        y_prev = y_cur;
         if (dp==0 && x_cur<(bi.getWidth()-1) && new Color(bi.getRGB(x_cur+1,y_cur))!= Color.black)
-            ++x_cur;
+            ++x_new;
         if (dp==1 && y_cur<(bi.getHeight()-1) && new Color(bi.getRGB(x_cur,y_cur+1))!= Color.black)
-            ++y_cur;
+            ++y_new;
         if (dp==2 && x_cur>0 && new Color(bi.getRGB(x_cur-1,y_cur))!= Color.black)
-            --x_cur;
+            --x_new;
         if (dp==3 && y_cur>0 && new Color(bi.getRGB(x_cur,y_cur-1))!= Color.black)
-            --y_cur;
+            --y_new;
+        blocks.add(new Pair(x_prev, y_prev));
+        while (flag) {
+            flag = false;
+            for (int i=0; i<blocks.size();i++){
+                temp = new Pair[blocks.size()];
+                temp = blocks.toArray(new Pair[blocks.size()]);
+                x = Integer.parseInt(temp[i].getElement0().toString());
+                y = Integer.parseInt(temp[i].getElement1().toString());
+                if (x<(bi.getWidth()-1) && new Color(bi.getRGB(x+1,y_cur))!= Color.black) {
+                    test = new Color(bi.getRGB(x+1, y));
+                    if (test.getRGB() == col.getRGB())
+                        if (!blocks.contains(new Pair(x+1, y))) {
+                            blocks.add(new Pair(x+1, y));
+//                            System.out.println((x+1)+"  "+y);
+                            flag = true;
+                        }
+                }
+                if (x>0 && new Color(bi.getRGB(x-1,y_cur))!= Color.black){
+                    test = new Color(bi.getRGB(x-1,y));
+                    if (test.getRGB()==col.getRGB())
+                        if (!blocks.contains(new Pair(x-1,y)))
+                            if (!blocks.contains(new Pair(x-1,y))) {
+                                blocks.add(new Pair(x-1,y));
+//                            System.out.println((x-1)+"  "+y);
+                                flag = true;
+                            }
+                }
+                if (y_cur<(bi.getHeight()-1) && new Color(bi.getRGB(x,y+1))!= Color.black) {
+                    test = new Color(bi.getRGB(x, y+1));
+                    if (test.getRGB() == col.getRGB())
+                        if (!blocks.contains(new Pair(x, y+1))) {
+                            blocks.add(new Pair(x, y+1));
+//                            System.out.println(x+"  "+(y+1));
+                            flag = true;
+                        }
+                }
+                if (y>0 && new Color(bi.getRGB(x,y-1))!= Color.black) {
+                    test = new Color(bi.getRGB(x, y-1));
+                    if (test.getRGB() == col.getRGB())
+                        if (!blocks.contains(new Pair(x, y-1))) {
+                            blocks.add(new Pair(x, y-1));
+//                            System.out.println(x+"  "+(y-1));
+                            flag = true;
+                        }
+                }
+            }
+        }
+        temp = new Pair[blocks.size()];
+        temp = blocks.toArray(new Pair[blocks.size()]);
+        for (int i=0; i<temp.length; ++i){
+            x = Integer.parseInt(temp[i].getElement0().toString());
+            y = Integer.parseInt(temp[i].getElement1().toString());
+            if (dp==0 && x>=x_new)
+                if (x>x_new) {
+                    x_new = x;
+                    y_new = y;
+                }
+                else {
+                if (cc==0 && y_new<y)
+                    y_new = y;
+                if (cc==1 && y_new>y)
+                    y_new = y;
+                }
+            if (dp==1 && y>=y_new)
+                if (y>y_new) {
+                    x_new = x;
+                    y_new = y;
+                }
+                else {
+                    if (cc==0 && x_new<x)
+                        x_new = x;
+                    if (cc==1 && x_new>x)
+                        x_new = x;
+                }
+            if (dp==2 && x<=x_new)
+                if (x<x_new) {
+                    x_new = x;
+                    y_new = y;
+                }
+                else {
+                    if (cc==0 && y_new>y)
+                        y_new = y;
+                    if (cc==1 && y_new<y)
+                        y_new = y;
+                }
+            if (dp==3 && y<=y_new)
+                if (y<y_new) {
+                    x_new = x;
+                    y_new = y;
+                }
+                else {
+                    if (cc==0 && x_new>x)
+                        x_new = x;
+                    if (cc==1 && x_new<x)
+                        x_new = x;
+                }
+        }
+        x_cur = x_new;
+        y_cur = y_new;
     };
     public void change_dp(int dir){
         switch (dir){
@@ -63,10 +170,10 @@ public class Agent {
     };
     public int count_prev_value(){
         HashSet<Pair> blocks = new HashSet<Pair>();
-        blocks.add(new Pair(x_cur, y_cur));
+        blocks.add(new Pair(x_prev, y_prev));
         boolean flag = true;
         int x,y;
-        Color col = new Color(bi.getRGB(x_cur,y_cur));
+        Color col = new Color(bi.getRGB(x_prev,y_prev));
         Color test;
         Pair[] temp;
         while (flag) {
@@ -76,40 +183,40 @@ public class Agent {
                 temp = blocks.toArray(new Pair[blocks.size()]);
                 x = Integer.parseInt(temp[i].getElement0().toString());
                 y = Integer.parseInt(temp[i].getElement1().toString());
-                if (x_cur<(bi.getWidth()-1) && new Color(bi.getRGB(x_cur+1,y_cur))!= Color.black) {
-                    test = new Color(bi.getRGB(++x_cur, y_cur));
+                if (x<(bi.getWidth()-1) && new Color(bi.getRGB(x+1,y_cur))!= Color.black) {
+                    test = new Color(bi.getRGB(x+1, y));
                     if (test.getRGB() == col.getRGB())
-                        if (!blocks.contains(new Pair(x_cur+1, y_cur))) {
-                            blocks.add(new Pair(x_cur+1, y_cur));
-//                            System.out.println((x_cur+1)+"  "+y_cur);
+                        if (!blocks.contains(new Pair(x+1, y))) {
+                            blocks.add(new Pair(x+1, y));
+//                            System.out.println((x+1)+"  "+y);
                             flag = true;
                         }
                 }
-                if (x_cur>0 && new Color(bi.getRGB(x_cur-1,y_cur))!= Color.black){
-                    test = new Color(bi.getRGB(x_cur-1,y_cur));
+                if (x>0 && new Color(bi.getRGB(x-1,y_cur))!= Color.black){
+                    test = new Color(bi.getRGB(x-1,y));
                     if (test.getRGB()==col.getRGB())
-                        if (!blocks.contains(new Pair(x_cur-1,y_cur)))
-                            if (!blocks.contains(new Pair(x_cur-1,y_cur))) {
-                            blocks.add(new Pair(x_cur-1,y_cur));
-//                                System.out.println((x_cur-1)+"  "+y_cur);
+                        if (!blocks.contains(new Pair(x-1,y)))
+                            if (!blocks.contains(new Pair(x-1,y))) {
+                            blocks.add(new Pair(x-1,y));
+//                            System.out.println((x-1)+"  "+y);
                             flag = true;
                         }
                 }
-                if (y_cur<(bi.getHeight()-1) && new Color(bi.getRGB(x_cur,y_cur+1))!= Color.black) {
-                    test = new Color(bi.getRGB(x_cur, y_cur+1));
+                if (y_cur<(bi.getHeight()-1) && new Color(bi.getRGB(x,y+1))!= Color.black) {
+                    test = new Color(bi.getRGB(x, y+1));
                     if (test.getRGB() == col.getRGB())
-                        if (!blocks.contains(new Pair(x_cur, y_cur+1))) {
-                            blocks.add(new Pair(x_cur, y_cur+1));
-//                            System.out.println(x_cur+"  "+(y_cur+1));
+                        if (!blocks.contains(new Pair(x, y+1))) {
+                            blocks.add(new Pair(x, y+1));
+//                            System.out.println(x+"  "+(y+1));
                             flag = true;
                         }
                 }
-                if (y_cur>0 && new Color(bi.getRGB(x_cur,y_cur-1))!= Color.black) {
-                    test = new Color(bi.getRGB(x_cur, y_cur-1));
+                if (y>0 && new Color(bi.getRGB(x,y-1))!= Color.black) {
+                    test = new Color(bi.getRGB(x, y-1));
                     if (test.getRGB() == col.getRGB())
-                        if (!blocks.contains(new Pair(x_cur, y_cur-1))) {
-                            blocks.add(new Pair(x_cur, y_cur-1));
-//                            System.out.println(x_cur+"  "+(y_cur-1));
+                        if (!blocks.contains(new Pair(x, y-1))) {
+                            blocks.add(new Pair(x, y-1));
+//                            System.out.println(x+"  "+(y-1));
                             flag = true;
                         }
                 }

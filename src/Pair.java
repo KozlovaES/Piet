@@ -24,11 +24,18 @@ public class Pair<K, V> {
         return element1;
     }
 
-    public boolean equals(Pair p){
-        if (p.element0==element0&&p.element1==element1)
-            return true;
-        else
-            return false;
+    public int hashCode(){
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(this.element0);
+        buffer.append(this.element1);
+        return buffer.toString().hashCode();
+    }
+
+    public boolean equals(Object object){
+        if (object == null) return false;
+        if (object == this) return true;
+        if(this.hashCode()== object.hashCode()) return true;
+        return false;
     }
 
 }
