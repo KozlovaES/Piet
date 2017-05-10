@@ -23,7 +23,7 @@ public class Def extends Function {
         while (agent.get_cur_color().getRGB()!=name.getRGB()) {
             func.add(t.get_func(agent.get_prev_color(), agent.get_cur_color()));
         }
-        agent.symboltable.add(new Symbol(name, new String("def"), args, Color.black, func));
+        agent.functiontable.add(new Cust_function(name, args, func));
         return agent;
     }
 }

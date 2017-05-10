@@ -4,20 +4,23 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Stack;
 import java.awt.Color;
+import java.util.Vector;
 
 /**
  * Created by Ekaterina on 07.04.2017.
  */
 public class Agent {
     public Stack stack;
-    public HashSet<Symbol> symboltable;
+    public Vector<Cust_function> functiontable;
+    public Vector<Cust_class> classtable;
     private BufferedImage bi;
     private Color prev_col;
     private int x_cur, y_cur, x_prev, y_prev, dp, cc;
     public Agent(BufferedImage bi){
         this.bi = bi;
         stack = new Stack();
-        symboltable = new HashSet<Symbol>();
+        classtable = new  Vector<Cust_class>();
+        functiontable = new Vector<Cust_function>();
         prev_col = Color.black;
         x_cur = 0;
         y_cur = 0;
@@ -26,8 +29,7 @@ public class Agent {
         dp = 0;
         cc = 0;
     }
-
-//    Field field;
+    // Переход на следующий блок в соответствии с dp и cc.
     public void move_one_block(){
         int x,y, x_new=x_cur, y_new=y_cur;
         boolean flag = true;
@@ -153,17 +155,16 @@ public class Agent {
             this.change_dp(1);
 //        System.out.println(x_new+"---"+y_new);
     };
+    // Поворот dp на dir по правилам Piet.
     public void change_dp(int dir){
         if (dir>0)
             dp = (dp+dir)%4;
         else
             dp = ((dp-dir)%4+4)%4;
     }
+    // Поворот cc в другую сторону.
     public void change_cc(){cc = (cc+1)%2;}
-    public void move(){
-
-    };
-
+    // Возвращение цвета текущего символа.
     public Color get_cur_color(){
 //        Заплатка!
 //        return new Color(bi.getRGB(x_cur,y_cur));
@@ -176,15 +177,17 @@ public class Agent {
             col = new Color(192, col.getGreen(), col.getBlue());
         return col;
     };
+    // Возвращение цвета прошлого символа.
+    public Color get_prev_color(){
+        return prev_col;
+    };
     public int getX_cur(){return x_cur;}
     public int getY_cur(){return y_cur;}
     public int getX_prev(){return x_prev;}
     public int getY_prev(){return y_prev;}
     public int getCc(){return cc;}
     public int getDp(){return  dp;}
-    public Color get_prev_color(){
-        return prev_col;
-    };
+    // Подсчет числа блоков одинаковго цвета вокруг предыдущего блока.
     public int count_prev_value(){
         HashSet<Pair> blocks = new HashSet<Pair>();
         blocks.add(new Pair(x_prev, y_prev));

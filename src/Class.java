@@ -11,10 +11,9 @@ public class Class extends Function {
         Transition t = new Transition();
         int count_fails = 0;
         Vector<Function> func = new Vector<>();
-
         agent.move_one_block();
         Color name = agent.get_cur_color();
-        agent.symboltable.add(new Symbol(name, "class", Color.black));
+        agent.classtable.add(new Cust_class(name));
         while (agent.get_cur_color().getRGB()!=name.getRGB()){
             if (agent.getX_cur()==agent.getX_prev() && agent.getY_cur()==agent.getY_prev())
                 ++count_fails;
@@ -27,23 +26,23 @@ public class Class extends Function {
             agent.move_one_block();
             if (t.get_func(agent.get_prev_color(), agent.get_cur_color()).name == "def")
             {
-                Color n = agent.get_cur_color();
+                Color def_n = agent.get_cur_color();
                 Vector<Color> args = new Vector<>();
-                Vector<Function> f = new Vector<>();
+                Vector<Function> function = new Vector<>();
                 agent.move_one_block();
                 while (agent.get_cur_color().getRGB()!=name.getRGB()) {
                     args.add(agent.get_cur_color());
                 }
                 agent.move_one_block();
                 while (agent.get_cur_color().getRGB()!=name.getRGB()) {
-                    f.add(t.get_func(agent.get_prev_color(), agent.get_cur_color()));
+                    function.add(t.get_func(agent.get_prev_color(), agent.get_cur_color()));
                 }
-                agent.symboltable.add(new Symbol(n, new String("def"), args, name, f));
+                agent.functiontable.add(new Cust_function(def_n, name, args, function));
             }
             else
                 func.add(t.get_func(agent.get_prev_color(), agent.get_cur_color()));
         }
-        agent.symboltable.add(new Symbol(name, new String("class"), Color.black, func));
+        agent.classtable.add(new Cust_class(name));
         return agent;
     }
 }
