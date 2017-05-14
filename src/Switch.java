@@ -7,7 +7,7 @@ public class Switch extends Function{
     public Agent work(Agent agent){
         int a;
         a = Math.abs(Integer.parseInt(agent.stack.pop().toString()));
-        for (int i=0;i<a;i++){
+        for (int i=0;i<a;++i){
             agent.change_cc();
         }
         return agent;

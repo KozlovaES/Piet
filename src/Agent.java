@@ -109,9 +109,9 @@ public class Agent {
                     y_new = y;
                 }
                 else {
-                    if (cc==0 && x_new>x)
+                    if (cc==0 && x_new<x)
                         x_new = x;
-                    if (cc==1 && x_new<x)
+                    if (cc==1 && x_new>x)
                         x_new = x;
                 }
             if (dp==2 && x<=x_new)
@@ -131,9 +131,9 @@ public class Agent {
                     y_new = y;
                 }
                 else {
-                    if (cc==0 && x_new<x)
+                    if (cc==0 && x_new>x)
                         x_new = x;
-                    if (cc==1 && x_new>x)
+                    if (cc==1 && x_new<x)
                         x_new = x;
                 }
 //            System.out.println(x+"-"+y+"   "+x_new+"-"+y_new);
@@ -166,16 +166,15 @@ public class Agent {
     public void change_cc(){cc = (cc+1)%2;}
     // Возвращение цвета текущего символа.
     public Color get_cur_color(){
-//        Заплатка!
-//        return new Color(bi.getRGB(x_cur,y_cur));
-        Color col = new Color(bi.getRGB(x_cur,y_cur));
-        if (col.getBlue()==204)
-            col = new Color(col.getRed(),col .getGreen(),192);
-        if (col.getGreen()==213)
-            col = new Color(col.getRed(), 192, col.getBlue());
-        if (col.getRed()==204)
-            col = new Color(192, col.getGreen(), col.getBlue());
-        return col;
+        return new Color(bi.getRGB(x_cur,y_cur));
+//        Color col = new Color(bi.getRGB(x_cur,y_cur));
+//        if (col.getBlue()==204)
+//            col = new Color(col.getRed(),col .getGreen(),192);
+//        if (col.getGreen()==213)
+//            col = new Color(col.getRed(), 192, col.getBlue());
+//        if (col.getRed()==204)
+//            col = new Color(192, col.getGreen(), col.getBlue());
+//        return col;
     };
     // Возвращение цвета прошлого символа.
     public Color get_prev_color(){

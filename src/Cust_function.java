@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Stack;
 import java.util.Vector;
 
 /**
@@ -6,8 +7,10 @@ import java.util.Vector;
  */
 public class Cust_function extends Symbol {
     private Color baseclass = null;
+    private Stack stack = new Stack();
     protected Vector<Color> args = null;
     protected Vector<Function> func;
+    
     public Cust_function(Color name){
         this.name = name;
         func = null;

@@ -1,5 +1,8 @@
+import javafx.scene.paint.*;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -35,10 +38,13 @@ public class Piet {
 //            e.printStackTrace();
 //        }
         try {
-            Agent agent = new Agent(ImageIO.read(new File("./Test.gif")));
+            Agent agent = new Agent(ImageIO.read(new File("./Test_1.gif")));
             Transition trans = new Transition();
             int count_fails=0;
-            for (int i=0; i<3; i++){
+//            Hint hint = new Hint();
+//            for (String i : hint.help(Color.red).keySet())
+//                System.out.println(i+"   "+hint.help(Color.red).get(i).toString());
+            for (int i=0; i<0; i++){
                 if (agent.getX_cur()==agent.getX_prev() && agent.getY_cur()==agent.getY_prev())
                     ++count_fails;
                 else
@@ -47,15 +53,22 @@ public class Piet {
                     System.out.println("Finish!");
                     break;
                 }
+                System.out.println("count fails: "+count_fails);
+                if (count_fails==2)
+                    agent.change_dp(1);
                 agent.move_one_block();
-//                System.out.println("Color value = " + agent.get_prev_color());
-//                System.out.println("Color value = " + agent.get_cur_color());
+                System.out.println("Color value = " + agent.get_prev_color());
+                System.out.println("Color value = " + agent.get_cur_color());
                 System.out.println("Blocks value = " + agent.count_prev_value());
                 if (trans.isBaseColor(agent.get_cur_color())&&trans.isBaseColor(agent.get_prev_color())) {
                     System.out.println("Function name = " + trans.get_func(agent.get_prev_color(), agent.get_cur_color()).getName());
                     agent = trans.get_func(agent.get_prev_color(), agent.get_cur_color()).work(agent);
 //                System.out.println("x: "+agent.getX_prev()+"->"+agent.getX_cur()+"\ny: "+agent.getY_prev()+"->"+agent.getY_cur());
-                    System.out.println("1st element: " + agent.stack.lastElement());
+                    if (!agent.stack.isEmpty())
+                        System.out.println("1st element: " + agent.stack.lastElement());
+                    System.out.println("dp = "+agent.getDp());
+                    System.out.println("cc = "+agent.getCc());
+                    System.out.println("x = "+agent.getX_cur()+", y = "+agent.getY_cur());
                     System.out.println();
                 }
                 else

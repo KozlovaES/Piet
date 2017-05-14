@@ -14,9 +14,10 @@ public class Def extends Function {
         Vector<Color> args = new Vector<>();
         Vector<Function> func = new Vector<>();
         agent.move_one_block();
-        // Прописать хранене аргументов.
+        // Прописать хранение аргументов.
         while (agent.get_cur_color().getRGB()!=name.getRGB()) {
             args.add(agent.get_cur_color());
+            agent.move_one_block();
         }
         agent.move_one_block();
         // Прописать хранение методов.

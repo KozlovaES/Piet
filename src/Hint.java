@@ -2,18 +2,18 @@ import java.awt.*;
 import java.util.HashMap;
 
 /**
- * Created by Ekaterina on 02.05.2017.
+ * Created by Ekaterina on 14.05.2017.
  */
-public class Transition {
+public class Hint {
     HashMap<Color, Pair<Integer, Integer>> dict;
-    Function[] functions = {new NoAction(), new Push(), new Pop(),
-                            new Add(), new Substract(), new Multiply(),
-                            new Divide(), new Mod(), new Not(),
-                            new Greater(), new Pointer(), new Switch(),
-                            new Duplicate(), new Roll(), new InNum(),
-                            new InChar(), new OutNum(), new OutChar(),
-                            new Def(), new Class()};
-    public Transition() {
+    String[] func = {"-", "push", "pop",
+            "add", "substract", "multiply",
+            "divide", "mod", "not",
+            "greater", "pointer", "switch",
+            "duplicate", "roll", "in(number)",
+            "in(char", "put(num)", "out(char)",
+            "def", "class", "is_class"};
+    public Hint(){
         dict = new HashMap<Color, Pair<Integer, Integer>>();
         dict.put(new Color(255, 192, 192), new Pair(0, 0));
         dict.put(new Color(255, 0, 0), new Pair(0, 1));
@@ -38,30 +38,23 @@ public class Transition {
         dict.put(new Color(153, 112, 0), new Pair(6, 2));
         dict.put(new Color(255,255,255), new Pair(0,0));
         dict.put(new Color(0,0,0), new Pair(0,0));
-
     }
-    public Function get_func(Color c1, Color c2){
-        if (dict.containsKey(c1) && dict.containsKey(c2) && c1!=Color.black &&
-                c2!=Color.black && c1!=Color.white && c2!=Color.white) {
-            Pair d1, d2;
-            d1 = dict.get(c1);
-            d2 = dict.get(c2);
-            int a1, a2, b1, b2;
-            a1 = Integer.parseInt(d1.getElement0().toString());
-            a2 = Integer.parseInt(d2.getElement0().toString());
-            b1 = Integer.parseInt(d1.getElement1().toString());
-            b2 = Integer.parseInt(d2.getElement1().toString());
-            return functions[(7 + a2 - a1) % 7 * 3
-                    + (3 + b2 - b1) % 3];
+    public HashMap<String, Color> help(Color color){
+        HashMap<String, Color> ans = new HashMap<String, Color>();
+        Pair d1, d2;
+        int a1, a2, b1, b2;
+        d1 = dict.get(color);
+        a1 = Integer.parseInt(d1.getElement0().toString());
+        b1 = Integer.parseInt(d1.getElement1().toString());
+        for (Color c : dict.keySet()) {
+            if (!c.equals(Color.black)&&!c.equals(Color.white)) {
+                d2 = dict.get(c);
+                a2 = Integer.parseInt(d2.getElement0().toString());
+                b2 = Integer.parseInt(d2.getElement1().toString());
+                ans.put(func[(7 + a2 - a1) % 7 * 3
+                        + (3 + b2 - b1) % 3], c);
+            }
         }
-        else
-            return functions[0];
+        return ans;
     }
-    public boolean isBaseColor(Color c){
-        if (dict.containsKey(c))
-            return true;
-        else
-            return false;
-    }
-
 }
