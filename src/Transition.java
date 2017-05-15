@@ -5,8 +5,8 @@ import java.util.HashMap;
  * Created by Ekaterina on 02.05.2017.
  */
 public class Transition {
-    HashMap<Color, Pair<Integer, Integer>> dict;
-    Function[] functions = {new NoAction(), new Push(), new Pop(),
+    private HashMap<Color, Pair<Integer, Integer>> dict;
+    private Function[] functions = {new NoAction(), new Push(), new Pop(),
                             new Add(), new Substract(), new Multiply(),
                             new Divide(), new Mod(), new Not(),
                             new Greater(), new Pointer(), new Switch(),
@@ -34,11 +34,10 @@ public class Transition {
         dict.put(new Color(255, 00, 255), new Pair(5, 1));
         dict.put(new Color(192, 0, 192), new Pair(5, 2));
         dict.put(new Color(255, 192, 0), new Pair(6, 0));
-        dict.put(new Color(255, 153, 0), new Pair(6, 1));
+        dict.put(new Color(192, 153, 0), new Pair(6, 1));
         dict.put(new Color(153, 112, 0), new Pair(6, 2));
         dict.put(new Color(255,255,255), new Pair(0,0));
         dict.put(new Color(0,0,0), new Pair(0,0));
-
     }
     public Function get_func(Color c1, Color c2){
         if (dict.containsKey(c1) && dict.containsKey(c2) && c1!=Color.black &&

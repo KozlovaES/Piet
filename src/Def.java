@@ -12,19 +12,13 @@ public class Def extends Function {
         agent.move_one_block();
         Color name = agent.get_cur_color();
         Vector<Color> args = new Vector<>();
-        Vector<Function> func = new Vector<>();
         agent.move_one_block();
-        // Прописать хранение аргументов.
         while (agent.get_cur_color().getRGB()!=name.getRGB()) {
             args.add(agent.get_cur_color());
             agent.move_one_block();
         }
         agent.move_one_block();
-        // Прописать хранение методов.
-        while (agent.get_cur_color().getRGB()!=name.getRGB()) {
-            func.add(t.get_func(agent.get_prev_color(), agent.get_cur_color()));
-        }
-        agent.functiontable.add(new Cust_function(name, args, func));
+        agent.getFunctiontable().add(new Cust_function(name, args));
         return agent;
     }
 }

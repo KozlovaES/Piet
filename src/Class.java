@@ -13,7 +13,7 @@ public class Class extends Function {
         Vector<Function> func = new Vector<>();
         agent.move_one_block();
         Color name = agent.get_cur_color();
-        agent.classtable.add(new Cust_class(name));
+        agent.getClasstable().add(new Cust_class(name));
         while (agent.get_cur_color().getRGB()!=name.getRGB()){
             if (agent.getX_cur()==agent.getX_prev() && agent.getY_cur()==agent.getY_prev())
                 ++count_fails;
@@ -37,12 +37,13 @@ public class Class extends Function {
                 while (agent.get_cur_color().getRGB()!=name.getRGB()) {
                     function.add(t.get_func(agent.get_prev_color(), agent.get_cur_color()));
                 }
-                agent.functiontable.add(new Cust_function(def_n, name, args, function));
+                agent.getFunctiontable().add(new Cust_function(def_n, name, args,
+                        agent.getX_cur(), agent.getY_cur(), agent.getDp(), agent.getCc()));
             }
             else
                 func.add(t.get_func(agent.get_prev_color(), agent.get_cur_color()));
         }
-        agent.classtable.add(new Cust_class(name));
+        agent.getClasstable().add(new Cust_class(name));
         return agent;
     }
 }

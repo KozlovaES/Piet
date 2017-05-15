@@ -5,8 +5,8 @@ import java.util.HashMap;
  * Created by Ekaterina on 14.05.2017.
  */
 public class Hint {
-    HashMap<Color, Pair<Integer, Integer>> dict;
-    String[] func = {"-", "push", "pop",
+    private HashMap<Color, Pair<Integer, Integer>> dict;
+    private String[] func = {"-", "push", "pop",
             "add", "substract", "multiply",
             "divide", "mod", "not",
             "greater", "pointer", "switch",
@@ -34,7 +34,7 @@ public class Hint {
         dict.put(new Color(255, 00, 255), new Pair(5, 1));
         dict.put(new Color(192, 0, 192), new Pair(5, 2));
         dict.put(new Color(255, 192, 0), new Pair(6, 0));
-        dict.put(new Color(255, 153, 0), new Pair(6, 1));
+        dict.put(new Color(192, 153, 0), new Pair(6, 1));
         dict.put(new Color(153, 112, 0), new Pair(6, 2));
         dict.put(new Color(255,255,255), new Pair(0,0));
         dict.put(new Color(0,0,0), new Pair(0,0));

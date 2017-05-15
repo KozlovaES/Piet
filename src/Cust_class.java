@@ -16,14 +16,16 @@ public class Cust_class extends Symbol {
     }
 
     public Agent create(Agent agent, Vector<Color> args){
-        for (int i=0; i<constructor.size();++i){
-            if (args.size()==constructor.elementAt(i).args.size()){
-                boolean flag = true;
-                for (int j=0; j<args.size(); ++j) {
-                    if (args.elementAt(j).getRGB()!=constructor.elementAt(i).args.elementAt(j).getRGB())
-                        flag = false;
+        if (constructor != null) {
+            for (int i = 0; i < constructor.size(); ++i) {
+                if (args.size() == constructor.elementAt(i).args.size()) {
+                    boolean flag = true;
+                    for (int j = 0; j < args.size(); ++j) {
+                        if (args.elementAt(j).getRGB() != constructor.elementAt(i).args.elementAt(j).getRGB())
+                            flag = false;
 //                    if (flag)
                         // Прописать создание объекта класса и помещение его в стек.
+                    }
                 }
             }
         }

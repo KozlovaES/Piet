@@ -7,45 +7,66 @@ import java.util.Vector;
  */
 public class Cust_function extends Symbol {
     private Color baseclass = null;
-    private Stack stack = new Stack();
     protected Vector<Color> args = null;
-    protected Vector<Function> func;
+    private int dp, cc, x, y;
     
     public Cust_function(Color name){
         this.name = name;
-        func = null;
-    }
-    public Cust_function(Color name, Vector<Function> func){
-        this.name = name;
+        dp = 0;
+        cc = 0;
+        x = 0;
+        y = 0;
         args = null;
-        this.func = func;
     }
-    public Cust_function(Color name, Vector<Color> arguments, Vector<Function> func){
+    public Cust_function(Color name, Vector<Color> arguments){
         this.name = name;
         args = arguments;
-        this.func = func;
+        dp = 0;
+        cc = 0;
+        x = 0;
+        y = 0;
     }
-    public Cust_function(Color name, String type, Color baseclass, Vector<Function> func){
+    public Cust_function(Color name, Vector<Color> arguments, int x, int y){
         this.name = name;
-        args = null;
-        this.baseclass = baseclass;
-        this.func = func;
+        args = arguments;
+        dp = 0;
+        cc = 0;
+        this.x = x;
+        this.y = y;
     }
-
-    public Cust_function(Color name, Color baseclass, Vector<Color> arguments, Vector<Function> func){
+    public Cust_function(Color name, Color baseclass, Vector<Color> arguments){
+        this.name = name;
+        args = arguments;
+        this.baseclass = baseclass;
+        dp = 0;
+        cc = 0;
+        x = 0;
+        y = 0;
+    }
+    public Cust_function(Color name, Color baseclass, Vector<Color> arguments, int x, int y){
         this.name = name;
         this.baseclass = baseclass;
         args = arguments;
-        this.func = func;
+        dp = 0;
+        cc = 0;
+        this.x = x;
+        this.y = y;
+    }
+    public Cust_function(Color name, Color baseclass, Vector<Color> arguments, int x, int y, int dp, int cc){
+        this.name = name;
+        this.baseclass = baseclass;
+        args = arguments;
+        this.dp = dp;
+        this.cc = cc;
+        this.x = x;
+        this.y = y;
     }
 
     public Vector<Color> getArgs(){return args;}
-    public Agent work(Agent agent){
-        for (int i=0; i<func.size(); ++i){
-            agent = func.get(i).work(agent);
-        }
-        return agent;
-    }
+    public int getX(){return x;}
+    public int getY(){return y;}
+    public int getDp(){return dp;}
+    public int getCc(){return cc;}
     @Override
     public int hashCode(){
         StringBuffer buffer = new StringBuffer();
