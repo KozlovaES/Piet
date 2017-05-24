@@ -34,6 +34,14 @@ public class Cust_function extends Symbol {
         this.x = x;
         this.y = y;
     }
+    public Cust_function(Color name, Vector<Color> arguments, int x, int y, int dp, int cc){
+        this.name = name;
+        args = arguments;
+        this.dp = dp;
+        this.cc = cc;
+        this.x = x;
+        this.y = y;
+    }
     public Cust_function(Color name, Color baseclass, Vector<Color> arguments){
         this.name = name;
         args = arguments;

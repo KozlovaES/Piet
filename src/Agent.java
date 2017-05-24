@@ -120,10 +120,10 @@ public class Agent {
         dp = 0;
         cc = 0;
     }
-    public int perform_function(){
+    public int perform_function(Color stop_col){
         boolean end = false;
         Transition trans = new Transition();
-        int count_fails=0;
+        int count_fails=-1;
         while (!end){
             if (this.getX_cur()==this.getX_prev() && this.getY_cur()==this.getY_prev())
                 ++count_fails;
@@ -146,7 +146,7 @@ public class Agent {
             if (trans.isBaseColor(this.get_cur_color())) {
                 if (trans.isBaseColor(this.get_prev_color()) &&
                         !this.get_cur_color().equals(Color.BLACK) && !this.get_prev_color().equals(Color.WHITE) &&
-                        !this.get_cur_color().equals(Color.WHITE)) {
+                        !this.get_cur_color().equals(Color.WHITE)&& !this.get_cur_color().equals(stop_col)) {
                     System.out.println("Function name = " + trans.get_func(this.get_prev_color(), this.get_cur_color()).getName());
                     trans.get_func(this.get_prev_color(), this.get_cur_color()).work(this);
                     //                System.out.println("x: "+agent.getX_prev()+"->"+agent.getX_cur()+"\ny: "+agent.getY_prev()+"->"+agent.getY_cur());
@@ -159,35 +159,55 @@ public class Agent {
                 }
             }
             else {
+                if (this.get_cur_color().equals(stop_col)) {
+                    end = true;
+                    System.out.println("\t\tx = " + this.getX_cur() + ", y = " + this.getY_cur());
+                    break;
+                }
+                else {
+                    System.out.println("====start_init====\n");
                     Vector<Color> arguments = new Vector<Color>();
                     Color name = new Color(get_cur_color().getRGB());
                     this.move_one_block();
-                    while (!this.get_cur_color().equals(name)){
-                        arguments.add(new Color(this.get_cur_color().getRGB()));
+                    while (!this.get_cur_color().equals(name)) {
+                        if (trans.isBaseColor(this.get_cur_color()))
+                            arguments.add(Color.WHITE);
+                        else
+                            arguments.add(new Color(this.get_cur_color().getRGB()));
+                        System.out.println("\tx = " + this.getX_cur() + ", y = " + this.getY_cur());
+                        this.move_one_block();
                     }
                     move_one_block();
+//                    System.out.println("\tx = " + this.getX_cur() + ", y = " + this.getY_cur());
                     for (int j = 0; j < this.classtable.size(); ++j) {
                         this.classtable.elementAt(j).create(this, arguments);
                         break;
                     }
-                    for (int j = 0; j < this.functiontable.size(); ++j)
-                        if (this.functiontable.elementAt(j).getName().getRGB() == this.get_cur_color().getRGB() &&
-                                arguments == this.functiontable.elementAt(j).getArgs()) {
+                    System.out.println(arguments);
+                    for (int j = 0; j < this.functiontable.size(); ++j) {
+                        if (this.functiontable.elementAt(j).getName().equals(name) &&
+                                arguments.equals(this.functiontable.elementAt(j).getArgs())) {
                             // Выполнить функцию
                             Cust_function func = this.functiontable.elementAt(j);
                             Stack st = new Stack();
-                            for (int k=0; k<func.getArgs().size(); ++k){
-                                System.out.println(stack.lastElement().getClass().getName());
-                                if (trans.isBaseColor(func.getArgs().get(k)) && stack.lastElement().getClass().getName()=="int")
+                            for (int k = 0; k < func.getArgs().size(); ++k) {
+                                if (trans.isBaseColor(func.getArgs().get(k)) && stack.lastElement().getClass().getName().equals("java.lang.Integer"))
                                     st.push(stack.pop());
 //                                         ||!trans.isBaseColor(func.getArgs().get(k)) && (Class)stack.lastElement().n)
                             }
-                            Agent temp = new Agent(func.getX(), func.getY(), func.getDp(), func.getCc(), bi, st);
-                            temp.perform_function();
-                            stack.addAll(temp.stack);
-                            break;
+                            if (!this.get_cur_color().equals(stop_col)) {
+                                Agent temp = new Agent(func.getX(), func.getY(), func.getDp(), func.getCc(), bi, st);
+                                System.out.println("...........\n\t\tFunction" + "   " + name + "\n...........");
+                                System.out.println(st);
+                                temp.perform_function(name);
+                                stack.addAll(temp.stack);
+                                System.out.println("====end====\n");
+                                break;
+                            }
                         }
+                    }
                 }
+            }
         }
         return 0;
     }

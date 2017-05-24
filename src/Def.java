@@ -14,11 +14,17 @@ public class Def extends Function {
         Vector<Color> args = new Vector<>();
         agent.move_one_block();
         while (agent.get_cur_color().getRGB()!=name.getRGB()) {
-            args.add(agent.get_cur_color());
+            if (t.isBaseColor(agent.get_cur_color()))
+                args.add(Color.WHITE);
+            else
+                args.add(agent.get_cur_color());
             agent.move_one_block();
         }
         agent.move_one_block();
-        agent.getFunctiontable().add(new Cust_function(name, args));
+        agent.getFunctiontable().add(new Cust_function(name, args, agent.getX_cur(), agent.getY_cur(), agent.getDp(), agent.getCc()));
+        while (agent.get_cur_color().getRGB()!=name.getRGB()) {
+            agent.move_one_block();
+        }
         return agent;
     }
 }

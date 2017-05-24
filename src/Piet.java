@@ -38,11 +38,15 @@ public class Piet {
 //            e.printStackTrace();
 //        }
         try {
-            Agent agent = new Agent(ImageIO.read(new File("./Test_2.gif")));
-            int res = agent.perform_function();
+            Agent agent = new Agent(ImageIO.read(new File("./Test_3.gif")));
+            int res = agent.perform_function(Color.BLACK);
             if (res==0)
                 System.out.println("Fin 0");
-            System.out.println(agent.getFunctiontable().elementAt(0).getName());
+            System.out.println(agent.getFunctiontable().elementAt(0).getName()+
+                    "  "+agent.getFunctiontable().elementAt(0).getX()+
+                    "  "+agent.getFunctiontable().elementAt(0).getY()+
+                    "  "+agent.getFunctiontable().elementAt(0).getDp()+
+                    "  "+agent.getFunctiontable().elementAt(0).getCc());
         } catch (IOException e) {
             e.printStackTrace();
         }
