@@ -9,7 +9,7 @@ public class InChar extends Function {
     public Agent work(Agent agent){
         Scanner s = new Scanner(System.in);
         // Должно юыть считывание ввода пользователя. Сейчас с консоли.
-        agent.stack.push(s.next().substring(0,1));
+        agent.stack.push((int)s.next().charAt(0));
         return agent;
     }
 }
