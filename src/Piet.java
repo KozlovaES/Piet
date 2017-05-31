@@ -38,7 +38,8 @@ public class Piet {
 //            e.printStackTrace();
 //        }
         try {
-            Agent agent = new Agent(ImageIO.read(new File("./Test_3.gif")));
+            System.out.println("\nRunning "+args[0].substring(1)+'\n');
+            Agent agent = new Agent(ImageIO.read(new File(args[0].substring(1)))); //"./Test_4.gif"
             int res = agent.perform_function();
             if (res==0)
                 System.out.println("Fin 0");

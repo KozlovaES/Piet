@@ -166,22 +166,27 @@ public class Agent {
         while (!end){
             if (!this.move())
                 end = true;
-            System.out.println("Color value = " + this.get_prev_color());
-            System.out.println("Color value = " + this.get_cur_color());
-            if (!this.get_prev_color().equals(Color.WHITE))
-                System.out.println("Blocks value = " + this.count_prev_value());
-            System.out.println(trans.isBaseColor(this.get_cur_color())+"   "+this.get_cur_color());
+//            System.out.println("Color value = " + this.get_prev_color());
+//            System.out.println("Color value = " + this.get_cur_color());
+//            if (!this.get_prev_color().equals(Color.WHITE))
+//                System.out.println("Blocks value = " + this.count_prev_value());
+//            System.out.println(trans.isBaseColor(this.get_cur_color())+"   "+this.get_cur_color());
             if (trans.isBaseColor(this.get_cur_color())) {
                 if (trans.isBaseColor(this.get_prev_color()) &&
                         !this.get_cur_color().equals(Color.BLACK) && !this.get_prev_color().equals(Color.WHITE) &&
                         !this.get_cur_color().equals(Color.WHITE)&& !this.get_cur_color().equals(stop_col)) {
                     System.out.println("Function name = " + trans.get_func(this.get_prev_color(), this.get_cur_color()).getName());
-                    trans.get_func(this.get_prev_color(), this.get_cur_color()).work(this);
-                    //                System.out.println("x: "+agent.getX_prev()+"->"+agent.getX_cur()+"\ny: "+agent.getY_prev()+"->"+agent.getY_cur());
+                    try {
+                        trans.get_func(this.get_prev_color(), this.get_cur_color()).work(this);
+                    }
+                    catch (Exception e) {
+                        System.out.println("\tWarning! Command failed");
+                    }
+                //                System.out.println("x: "+agent.getX_prev()+"->"+agent.getX_cur()+"\ny: "+agent.getY_prev()+"->"+agent.getY_cur());
                     if (!this.stack.isEmpty())
                         System.out.println("1st element: " + this.stack.lastElement());
-                    System.out.println("dp = " + this.getDp());
-                    System.out.println("cc = " + this.getCc());
+//                    System.out.println("dp = " + this.getDp());
+//                    System.out.println("cc = " + this.getCc());
                     System.out.println("x = " + this.getX_cur() + ", y = " + this.getY_cur());
                     System.out.println();
                 }
@@ -205,7 +210,7 @@ public class Agent {
                         }
                         else
                             arguments.add(new Color(this.get_cur_color().getRGB()));
-                        System.out.println("\tx = " + this.getX_cur() + ", y = " + this.getY_cur());
+//                        System.out.println("\tx = " + this.getX_cur() + ", y = " + this.getY_cur());
                         if (!this.move())
                             end = true;
                     }
