@@ -8,42 +8,55 @@ public class Class extends Function {
     public Class(){name = new String("class");}
     @Override
     public Agent work(Agent agent) {
+        System.out.println("Class creation");
         Transition t = new Transition();
-        int count_fails = 0;
         Vector<Function> func = new Vector<>();
-        agent.move_one_block();
-        Color name = agent.get_cur_color();
-        agent.getClasstable().add(new Cust_class(name));
-        while (agent.get_cur_color().getRGB()!=name.getRGB()){
-            if (agent.getX_cur()==agent.getX_prev() && agent.getY_cur()==agent.getY_prev())
-                ++count_fails;
-            else
-                count_fails=0;
-            if (count_fails>=3){
-//                System.out.println("Finish creating class!");
-                break;
-            }
-            agent.move_one_block();
-            if (t.get_func(agent.get_prev_color(), agent.get_cur_color()).name == "def")
-            {
-                Color def_n = agent.get_cur_color();
-                Vector<Color> args = new Vector<>();
-                Vector<Function> function = new Vector<>();
-                agent.move_one_block();
-                while (agent.get_cur_color().getRGB()!=name.getRGB()) {
-                    args.add(agent.get_cur_color());
-                }
-                agent.move_one_block();
-                while (agent.get_cur_color().getRGB()!=name.getRGB()) {
-                    function.add(t.get_func(agent.get_prev_color(), agent.get_cur_color()));
-                }
-                agent.getFunctiontable().add(new Cust_function(def_n, name, args,
-                        agent.getX_cur(), agent.getY_cur(), agent.getDp(), agent.getCc()));
-            }
-            else
-                func.add(t.get_func(agent.get_prev_color(), agent.get_cur_color()));
+        if (!agent.move()) {
+            agent.setCur_class(null);
+            return agent;
         }
-        agent.getClasstable().add(new Cust_class(name));
+        Color name = agent.get_cur_color();
+        agent.setCur_class(name);
+        if (!agent.move()) {
+            agent.setCur_class(null);
+            return agent;
+        }
+        if (!agent.getClasstable().contains(name)) {
+            if (t.isBaseColor(agent.get_cur_color()))
+                agent.getClasstable().add(new Cust_class(name));
+            else {
+                for (int i=0; i<agent.getClasstable().size(); ++i)
+                    if (agent.getClasstable().elementAt(i).getName().equals(agent.get_cur_color())){
+                        agent.getClasstable().add(new Cust_class(name, agent.get_cur_color()));
+                        for (int j=0; j<agent.getFunctiontable().size(); j++){
+                            if (agent.getFunctiontable().elementAt(j).getBaseclass()!=null &&
+                                    agent.getFunctiontable().elementAt(j).getBaseclass().equals(agent.get_cur_color())) {
+                                Cust_function temp = agent.getFunctiontable().elementAt(j);
+                                agent.getFunctiontable().add(new Cust_function(temp.name, name, temp.getArgs(),
+                                        temp.getX(), temp.getY(), temp.getDp(), temp.getCc()));
+                            }
+                        }
+                        if (!agent.move()) {
+                            agent.setCur_class(null);
+                            return agent;
+                        }
+                        break;
+                    }
+            }
+        }
+        while (!agent.get_cur_color().equals(name)){
+            if (!agent.move()) {
+                agent.setCur_class(null);
+                return agent;
+            }
+            if (t.get_func(agent.get_prev_color(), agent.get_cur_color()).getName().equals("def")) {
+                System.out.println("\nFunction name = " + t.get_func(agent.get_prev_color(), agent.get_cur_color()).getName());
+                System.out.println("x = " + agent.getX_cur() + ", y = " + agent.getY_cur());
+                t.get_func(agent.get_prev_color(), agent.get_cur_color()).work(agent);
+            }
+        }
+        agent.setCur_class(null);
+        System.out.println("Class fin");
         return agent;
     }
 }

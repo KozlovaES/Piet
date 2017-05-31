@@ -43,13 +43,19 @@ public class Piet {
             int res = agent.perform_function();
             if (res==0)
                 System.out.println("Fin 0");
+            System.out.println("\tFunctions:");
             for (int i = 0; i<agent.getFunctiontable().size(); ++i)
                 System.out.println(agent.getFunctiontable().elementAt(i).getName()+
                         "  "+agent.getFunctiontable().elementAt(i).getX()+
                         "  "+agent.getFunctiontable().elementAt(i).getY()+
                         "  "+agent.getFunctiontable().elementAt(i).getDp()+
                         "  "+agent.getFunctiontable().elementAt(i).getCc()+
-                        "  "+agent.getFunctiontable().elementAt(i).getArgs());
+                        "  "+agent.getFunctiontable().elementAt(i).getArgs()+
+                        "  "+agent.getFunctiontable().elementAt(i).getBaseclass());
+            System.out.println("\tClasses:");
+            for (int i=0; i<agent.getClasstable().size(); ++i)
+                System.out.println(agent.getClasstable().elementAt(i).getName()+
+                        "  "+agent.getClasstable().elementAt(i).getParent());
         } catch (IOException e) {
             e.printStackTrace();
         }

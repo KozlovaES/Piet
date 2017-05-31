@@ -71,6 +71,7 @@ public class Cust_function extends Symbol {
     }
 
     public Vector<Color> getArgs(){return args;}
+    public Color getBaseclass(){return baseclass;}
     public int getX(){return x;}
     public int getY(){return y;}
     public int getDp(){return dp;}

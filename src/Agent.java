@@ -10,6 +10,7 @@ import java.util.Vector;
  * Created by Ekaterina on 07.04.2017.
  */
 public class Agent {
+    private Color cur_class = null;
     public Stack stack;
     private Vector<Cust_function> functiontable;
     private Vector<Cust_class> classtable;
@@ -217,10 +218,10 @@ public class Agent {
                     if (!this.move())
                         end = true;
 //                    System.out.println("\tx = " + this.getX_cur() + ", y = " + this.getY_cur());
-                    for (int j = 0; j < this.classtable.size(); ++j) {
-                        this.classtable.elementAt(j).create(this, arguments);
-                        break;
-                    }
+//                    for (int j = 0; j < this.classtable.size(); ++j) {
+//                        this.classtable.elementAt(j).create(this, arguments);
+//                        break;
+//                    }
                     System.out.println(arguments);
                     for (int j = 0; j < this.functiontable.size(); ++j) {
                         if (this.functiontable.elementAt(j).getName().equals(name) &&
@@ -403,6 +404,8 @@ public class Agent {
         return new Color(bi.getRGB(x_cur,y_cur));
     };
     // Возвращение цвета прошлого символа.
+    public void setCur_class(Color col){cur_class = col;}
+    public Color getCur_class(){return cur_class;}
     public Color get_prev_color(){
         return prev_col;
     };
